@@ -1,0 +1,24 @@
+/**
+ * Auto Generated Java Class.
+ */
+import java.util.Scanner;
+public class Test {
+  
+  
+  public static void main(String[] args) { 
+    
+    Scanner Scan = new Scanner(System.in);
+    System.out.println("Press money");
+    int a = Scan.nextInt;
+    int b;
+    while(a<100000){
+      if(a<100000){
+      b = a;
+      System.out.println("Left how much");
+      }
+        
+      System.out.println("done");
+    
+  }
+  
+}
