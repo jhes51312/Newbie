@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="請輸入日期"
+        android:textSize="25dp"/>
+    <EditText
+        android:id="@+id/edtDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:textSize="25dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用餐金額"
+        android:textSize="25dp"/>
+    <EditText
+        android:id="@+id/edtNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:textSize="25dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="選擇用餐時間"
+        android:textSize="25dp"/>
+
+    <RadioGroup
+        android:id="@+id/radGrouptime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radBtn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="早餐" />
+
+        <RadioButton
+            android:id="@+id/radBtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="午餐" />
+
+        <RadioButton
+            android:id="@+id/radBtn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="晚餐" />
+    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="選擇用餐類型"
+        android:textSize="25dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerManu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="紀錄" />
+
+        <Button
+            android:id="@+id/btnShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="檢視" />
+    </LinearLayout>
+<TextView
+    android:id="@+id/txtResult"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="18dp"/>
+
+</LinearLayout>
+
+/////////////////////////////////////////////////////////////
+
+
+
+
+package com.charge.myrecord20210409;
+
+public class Recorditem {
+    private String mRecordDate;
+    private int mRecordMoney;
+    private String mRecordTime;
+    private String mRecordType;
+
+    // 建構子
+    public Recorditem(String Date,int Money,String Time,String Type){
+        mRecordDate= Date;
+        mRecordMoney=Money;
+        mRecordTime=Time;
+        mRecordType=Type;
+    }
+
+    public String getRecordDate() {
+        return mRecordDate;
+    }
+    public int getRecordMoney() {
+        return mRecordMoney;
+    }
+    public String getRecordTime() {
+        return mRecordTime;
+    }
+    public String getRecordType() {
+        return mRecordType;
+    }
+}
+
+/////////////////////////////////////////////////////////
+<resources>
+    <string name="app_name">MyRecord20210409</string>
+
+    <string name="menu_type">Choose a item</string>
+    <string-array name="Menus">
+        <item>炒飯</item>
+        <item>湯麵</item>
+        <item>水餃</item>
+        <item>鐵板燒</item>
+        <item>火鍋</item>
+    </string-array>
+</resources>
+
+////////////////////////////////////////
+
+package com.charge.myrecord20210409;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView txtResult;
+    private Spinner spinnerManu;
+    private Button btnIn,btnShow;
+    private EditText edtDate,edtNum;
+    private RadioGroup radGrouptime;
+    private RadioButton radBtn1,radBtn2,radBtn3;
+    private ArrayList<Recorditem> mRecordList;//宣告 動態陣列
+    int nn=0;
+    String strTime="";
+    String selitem="";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mRecordList = new ArrayList<>();//建立
+        txtResult=(TextView)findViewById(R.id.txtResult);
+        btnIn=(Button) findViewById(R.id.btnIn);
+        btnShow=(Button) findViewById(R.id.btnShow);
+        edtDate=(EditText) findViewById(R.id.edtDate);
+        edtNum=(EditText) findViewById(R.id.edtNum);
+        radGrouptime=(RadioGroup) findViewById(R.id.radGrouptime);
+        radBtn1=(RadioButton) findViewById(R.id.radBtn1);
+        radBtn2=(RadioButton) findViewById(R.id.radBtn2);
+        radBtn3=(RadioButton) findViewById(R.id.radBtn3);
+        spinnerManu=(Spinner) findViewById(R.id.spinnerManu);
+
+        ArrayAdapter<CharSequence> adapterMenus = ArrayAdapter.createFromResource(this, R.array.Menus,android.R.layout.simple_spinner_dropdown_item);
+
+        adapterMenus.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
+        spinnerManu.setAdapter(adapterMenus); //建立下拉式選單的資料
+        spinnerManu.setOnItemSelectedListener(spinnerManuListener);
+
+        radGrouptime.setOnCheckedChangeListener(radGrouptimeListener);
+        btnIn.setOnClickListener(btnListener);
+        btnShow.setOnClickListener(btnShowListener);
+    }
+
+    private RadioGroup.OnCheckedChangeListener radGrouptimeListener=new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            //int p = group.indexOfChild((RadioButton) findViewById(checkedId));
+            //int count= group.getChildCount();
+
+            if(checkedId == R.id.radBtn1)
+                strTime=radBtn1.getText().toString();
+            else if(checkedId == R.id.radBtn2)
+                strTime=radBtn2.getText().toString();
+            else if(checkedId == R.id.radBtn3)
+                strTime=radBtn3.getText().toString();
+        }
+    };
+
+    private Spinner.OnItemSelectedListener spinnerManuListener=new Spinner.OnItemSelectedListener(){
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            selitem=parent.getSelectedItem().toString();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+    private Button.OnClickListener btnListener = new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            nn++;
+
+            if(edtDate.getText().toString().equals("")) {
+                txtResult.setText("請輸入日期");
+            }else if(edtNum.getText().toString().equals(""))
+                txtResult.setText("請輸入金額");
+            else {
+                String date= edtDate.getText().toString();
+                int money = Integer.parseInt(edtNum.getText().toString());
+
+                mRecordList.add(new Recorditem(date, money, strTime,selitem));//新增動態陣列的資料
+                txtResult.setText("");
+                edtDate.setText("");
+                edtNum.setText("");
+            }
+        }
+    };
+    private Button.OnClickListener btnShowListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String result = "";
+
+            for (int i = 0; i < nn; i++) {
+                Recorditem str = mRecordList.get(i);
+                result = result + "日期:" + str.getRecordDate() + "，金額:" + str.getRecordMoney() + "，時間:" + str.getRecordTime() +"，項目:"+str.getRecordType() +'\n';
+            }
+            txtResult.setText(result);
+            //}
+        }
+    };
+}
+
+
+
+
