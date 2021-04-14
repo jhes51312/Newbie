@@ -1,0 +1,25 @@
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,float roundPx)
+    {
+        //用指定的位圖構造一個畫布，以將其繪製到其中。
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        //畫布功能
+        Canvas canvas = new Canvas(output);
+        final int color = 0xff424242;
+        //繪製幾何圖形
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(),
+                bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        paint.setAntiAlias(true);
+        //填充整個畫布
+        canvas.drawARGB(0, 158, 245, 66);
+        paint.setColor(color);
+        //繪製圓角矩形
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        //使用指定的矩陣繪製位圖。
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
