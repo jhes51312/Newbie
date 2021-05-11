@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="Hellotype.css" ?>
+<name>
+	<Welcome>各位老師，大家好!我是你們XML課程的講師：</Welcome>
+	<Teacher>楊明軒</Teacher>
+	<end>請多多指教</end>
+</name>

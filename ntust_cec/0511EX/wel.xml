@@ -1,0 +1,18 @@
+<h1> 推薦叢書 </h1>
+<table border=1 cellpadding=5>
+	<tr>
+		<th> 名稱 </th>
+		<th> 作者 </th>
+		<th> 售價 (新台幣) </th>
+	</tr>
+	<tr>
+		<td> 煞死你的網頁設計絕招 </td>
+		<td> 胭脂虎 </td>
+		<td align="right"> 590 </td>
+	</tr>
+	<tr>
+		<td> 如何在 7-11 白吃白喝 </td>
+		<td> 無名氏 </td>
+		<td align="right"> 120 </td>
+	</tr>
+</table>
